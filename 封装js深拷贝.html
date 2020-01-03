@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			function checkType(data){
+				return Object.prototype.toString.call(data).slice(8,-1);//[object Object]
+			}
+			
+			function deepCopy(data){//拷贝的都是对象数据类型
+				let dataType = checkType(data);
+				let result;
+				if(dataType == 'Array'){
+					result = [];
+				}else if(dataType == 'Object'){
+					result = {};
+				}else{
+					result = data;
+					return result;
+				}
+				
+				for(let key in data){
+					if(checkType(data[key]) == 'Array' || 'Object'){
+						result[key] = deepCopy(data[key]);
+					}else{
+						result[key] = data[key];
+					}
+				}
+				return result;
+			}
+			
+			let data ={
+				name:'zly',
+				age:32,
+				movie:{
+					name:'乘风破浪',
+					timeLong:120,
+					main:['邓超','彭于晏'],
+				}
+			}
+			
+			let result = deepCopy(data)
+			console.log(result);
+			
+			
+			result.movie.main[0] = '赵丽颖';
+			console.log(data);
+		</script>
+	</body>
+</html>
