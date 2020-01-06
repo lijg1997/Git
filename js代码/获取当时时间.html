@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function getDateAndTimeString() {
+            //获取当地的年月日时间
+            var date = new Date;
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var day = date.getDate();
+            var time = date.toLocaleTimeString();
+            //	return "现在是" + year + "年" + month + "月" + day + "日 " + time;
+            return `现在是${year}年${month}月${day}日${time}`;
+        }
+    </script>
+</body>
+
+</html>

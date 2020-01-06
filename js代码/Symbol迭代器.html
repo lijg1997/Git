@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function myIterator() {
+            //这个接口让数组使用for of  也可以让对象使用
+            let that = this;
+            let index = 0; //代表刚开始指向数组的起始位置
+            if (this instanceof Array) {
+                let length = this.length;
+                return {
+                    next: function() {
+                        return index < length ? {
+                            value: that[index++],
+                            done: false
+                        } : {
+                            value: undefined,
+                            done: true
+                        };
+                    }
+                }
+            } else {
+                let keysArr = Object.keys(this); //把对象得所有属性组成一个数组返回；
+                let length = keysArr.length;
+                return {
+                    next: function() {
+                        return index < length ? {
+                            value: that[keysArr[index++]],
+                            done: false
+                        } : {
+                            value: undefined,
+                            done: true
+                        };
+                    }
+                }
+            }
+        }
+        Array.prototype[Symbol.iterator] = myIterator;
+        Object.prototype[Symbol.iterator] = myIterator;
+    </script>
+</body>
+
+</html>

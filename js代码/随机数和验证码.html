@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function getRandom(a, b) {
+            //获取一个区间的随机数
+            return Math.floor(Math.random() * (b - a + 1) + a);
+        }
+
+        function getRandomCode(n) {
+            //获取随机验证码，位数可以自己确定
+            var str = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
+            var code = "";
+            for (var i = 0; i < n; i++) {
+                code += str[Math.floor(Math.random() * str.length)];
+            }
+            return code;
+        }
+    </script>
+</body>
+
+</html>
