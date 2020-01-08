@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<script type="text/javascript">
+			console.log([] == []); //false
+			console.log([] == ![]); //true
+			//[] == false   
+			//对象和基本数据类型之间的判等
+			//对象数据类型和基本数据类型之间进行比较、判等和运算的时候，
+			//需要将对象数据类型转化基本数据类型，再按照基本数据类型的规则进行运算
+			//对象数据类型转基本数据类型规则：
+			//1、首先看对象能不能转化为一个基本值类型  看看对象能不能使用valueOf方法转化一个基本值类型,调用的全是Object的原型对象当中的valueOf方法；
+			//2、我们发现所有的对象在调用valueOf方法的时候都返回自身；
+			//3、如果对象调用valueof方法返回的不是基本值类型，那么会接着调用toString方法转化基本值；
+
+			var arr = [1, 2, 3];
+			var obj = {
+				name: '赵丽颖'
+			};
+			var fn = function() {
+				console.log('iloveyou~');
+			}
+
+			//常用对象类型转基本数据类型
+			console.log(arr.valueOf().toString()); //'1,2,3'
+			console.dir(fn.valueOf().toString()); //函数本身字符串
+			console.log(obj.valueOf().toString()); //'[object Object]'
+
+
+			var b1 = {
+				b2: [2, 'atguigu', console.log],
+				b3: function() {
+					alert('hello')
+				}
+			}
+			console.log(b1, b1.b2, b1.b3) // 整个对象  [2,'atguigu',console.log] 函数本身 
+			console.log(b1 instanceof Object, typeof b1) //true object
+			console.log(b1.b2 instanceof Array, typeof b1.b2) //true object
+			console.log(b1.b3 instanceof Function, typeof b1.b3) //true function
+			console.log(typeof b1.b2[2]) //function  
+			console.log(typeof b1.b2[2]('atguigu')) //'atguigu' 'undefined'; ==> typeof console.log('atguigu');
+			console.log(1, console.log(2, console.log(3))) //3 / 2 undefined / 1 undefined
+		</script>
+	</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//01
+			function test() {
+				b();
+				a = 1;
+				function b() {
+					var a;
+					console.log(1);
+					console.log(a); 
+					a = 2;
+				}
+			}
+			test();
+			console.log(a);
+
+			//02
+			function fn(){
+				console.log(5);
+				console.log(fn);
+			}
+			console.log(fn());
+			var a = 12;
+			function fn(){
+				console.log(a);
+				return;
+				var a = 45;
+			}
+			fn();
+
+			//03
+			var a = 100;
+			function text(){
+				var b = 2 * a;
+				var a = 200;
+				var c = a / 2;
+				console.log(b);
+				console.log(c);
+			}
+			text();
+
+			//04
+			+function() {
+				console.log(a)
+				var a = 5;
+				function a() {}
+				console.log(a)
+				function b() {}
+				b = 6
+				console.log(b)
+				var c = d = b
+			}()
+			console.log(d)
+			console.log(c)
+			
+			//05
+			var a = 10;
+			function aaa(){ 
+			    alert(a);
+			};
+			aaa(); 
+
+			//06
+			function aaa(){
+				var a = 10;  
+			};
+			aaa();
+			alert(a);
+			
+			//07
+			var a = 10; 
+			function aaa(){ 
+			 	alert(a);
+			};            
+			function bbb(){
+				var a = 20;
+				aaa();
+			}
+			bbb(); 
+			
+			//08
+			function aaa(){
+			    a = 10; 
+			}
+			aaa();
+			alert(a);
+			var a;
+			function aaa(){
+			    a=10;
+			};
+			aaa();
+			alert(a);
+			
+			//09
+			function aaa(){
+			    var a=b=10; 
+			}
+			aaa();
+			alert(a);
+			alert(b);
+			 
+			 //10
+			function aaa(){
+			  	alert(a);
+			  	var a=20;
+			}
+			aaa(); 
+			var a=10;
+			function aaa(){
+			  	alert(a);
+			  	var a=20;
+			}
+			aaa();
+			var a=10;
+			function aaa(){
+			 	var a;
+			  	alert(a);
+			  	a=20;
+			}
+			aaa();
+			
+			//11
+			var a=10;
+			function aaa(a){ 
+			    alert(a);
+			    var a=20; 
+			} 
+			aaa(a);
+			    
+			//12   
+			var a=[1,2,3];
+			var b=a;
+			b.push(4); 
+			alert(a);
+			var a=[1,2,3];
+			var b=a;
+			b=[1,2,3,4]
+			alert(a)
+
+			//13
+			var x = 10;
+			function fn() {
+			    console.log(x);
+			}
+			function show(f) {
+			    var x = 20;
+			    f();
+			}
+			show(fn);
+			
+			//14
+			var a;
+			function a() {}
+			console.log(typeof a)
+			
+			//15
+			if (!(b in window)) {
+			    	var b = 1;
+			}
+			console.log(b)
+			
+			//16
+			var c= 1  	
+			function c(c) {
+			    console.log(c)
+			    var c = 3
+			}
+			c(2) 
+			
+			//17	
+			var fn = function () {
+			    console.log(fn)
+			}
+			fn()
+			
+			//18	
+			var obj = {
+			    fn2: function () {
+			      	console.log(fn2)
+			    }
+			}
+			obj.fn2()
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<script type="text/javascript">
+			//01
+			alert(a);
+			a = 0; //报错
+
+			//02
+			alert(a);
+			var a = 0;
+			alert(a);
+
+			//03
+			alert(a);
+			var a = '我是变量';
+
+			function a() {
+				alert('我是函数')
+			}
+			alert(a);
+
+			//04
+			alert(a);
+			a++;
+			alert(a);
+			var a = '我是变量';
+
+			function a() {
+				alert('我是函数')
+			}
+			alert(a)
+
+			//05
+			alert(a);
+			var a = 0;
+			alert(a);
+
+			function fn() {
+				alert(a);
+				var a = 1;
+				alert(a);
+			}
+			fn()
+			alert(a);
+
+			//06
+			alert(a);
+			var a = 0;
+			alert(a);
+
+			function fn() {
+				alert(a);
+				a = 1;
+				alert(a);
+			}
+			fn()
+			alert(a);
+
+			//07
+			alert(a);
+			var a = 0;
+			alert(a);
+
+			function fn() {
+				alert(a);
+				a = 1;
+				alert(a);
+			}
+			fn()
+
+			function fn() {
+				alert(a)
+				var a = 0;
+				alert(a++);
+			}
+
+			alert(a);
+
+			// 08
+			alert(a);
+			var a = 1;
+			alert(a);
+
+			function a() {
+				alert(2);
+			}
+			alert(a);
+			var a = 3;
+			alert(a);
+
+			function a() {
+				alert(4);
+			}
+			alert(a);
+
+			//09
+			f1();
+			console.log(c);
+			console.log(b);
+			console.log(a);
+
+			function f1() {
+				var a = b = c = 9;
+				console.log(a)
+				console.log(b)
+				console.log(c)
+			}
+
+			//10
+			myFun(10, 20);
+			var myFun = function(a, b) {
+				return a + b;
+			}
+
+
+			//11
+			var i = 1;
+			i = i++;
+			var j = i++;
+			var k = i + ++i * i++; 
+			var k = i++ + i++ * i++; 
+			console.log(i, j, k);
+		</script>
+	</body>
+
+</html>
