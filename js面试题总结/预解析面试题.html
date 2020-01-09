@@ -1,133 +1,146 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			//01
-			alert(a);
-			a = 0; //报错
+<body>
+    <script type="text/javascript">
+        //01
+        alert(a);
+        a = 0; //报错,a is not defined:不带var的变量没有提升 
 
-			//02
-			alert(a);
-			var a = 0;
-			alert(a);
+        //02
+        alert(a); //undefined:带var变量预解析时存在提升
+        var a = 0;
+        alert(a); //0
 
-			//03
-			alert(a);
-			var a = '我是变量';
+        //03
+        alert(a); //函数原样输出:函数和带var的变量重名,带var的变量被忽略
+        var a = '我是变量';
 
-			function a() {
-				alert('我是函数')
-			}
-			alert(a);
+        function a() {
+            alert('我是函数')
+        }
+        alert(a); //我是变量:重新赋值a = '我是变量'
 
-			//04
-			alert(a);
-			a++;
-			alert(a);
-			var a = '我是变量';
+        //04
+        alert(a); //1. 函数原样输出
+        a++;
+        alert(a); //2. NaN
+        var a = '我是变量';
 
-			function a() {
-				alert('我是函数')
-			}
-			alert(a)
+        function a() {
+            alert('我是函数')
+        }
+        alert(a) //3. 我是变量
 
-			//05
-			alert(a);
-			var a = 0;
-			alert(a);
+        //05
+        alert(a); //1. undefined
+        var a = 0;
+        alert(a); //2. 0
 
-			function fn() {
-				alert(a);
-				var a = 1;
-				alert(a);
-			}
-			fn()
-			alert(a);
+        function fn() {
+            alert(a); //3. undefined
+            var a = 1;
+            alert(a); //4. 1
+        }
+        fn()
+        alert(a); //5. 0:因为函数中的a带var,所以没有影响外面的a,如果函数里的a没有带var,运行结果就会不一样了
 
-			//06
-			alert(a);
-			var a = 0;
-			alert(a);
+        //06
+        alert(a); //1. undefined
+        var a = 0;
+        alert(a); //2. 0
 
-			function fn() {
-				alert(a);
-				a = 1;
-				alert(a);
-			}
-			fn()
-			alert(a);
+        function fn() {
+            alert(a); //3. 0:不带var没有提升,函数内没有a,沿着作用域链向上找,找到全局里的a
+            a = 1;
+            alert(a); //4. 1
+        }
+        fn()
+        alert(a); //5. 1:函数里的a没有带var,此时先看有没有形参,如果有,相当于在函数里var一个a,
+        //如果没有形参, 看全局有没有a, 如果有就是修改全局的a, 如果全局没有a, 就在全局增加一个a, 这里就是修改全局的a
 
-			//07
-			alert(a);
-			var a = 0;
-			alert(a);
+        //07
+        alert(a); //1. undefined
+        var a = 0;
+        alert(a); //2. 0
 
-			function fn() {
-				alert(a);
-				a = 1;
-				alert(a);
-			}
-			fn()
+        function fn() {
+            alert(a);
+            a = 1;
+            alert(a);
+        } //函数在预解析提升时,如果函数重名,下边的会覆盖掉上边的,所以这函数失效
+        fn()
 
-			function fn() {
-				alert(a)
-				var a = 0;
-				alert(a++);
-			}
+        function fn() {
+            alert(a); //3. undefined
+            var a = 2;
+            alert(a++); //4. 2:++在前,先赋值后运算,++在后,先运算再赋值,所以这里还是输出0,但a再后面已经变成1
+        }
 
-			alert(a);
+        alert(a); //5. 0:函数里的a带var,不影响全局的a
 
-			// 08
-			alert(a);
-			var a = 1;
-			alert(a);
+        // 08
+        alert(a); //1. 函数本身
+        var a = 1; //预解析时,变量名与函数名重名,预解析时的 var a = undefined 会被忽略,执行时的 a = 1 不受影响
+        alert(a); //2. 1
 
-			function a() {
-				alert(2);
-			}
-			alert(a);
-			var a = 3;
-			alert(a);
+        function a() {
+            alert(2);
+        } //函数重名,此函数失效
+        alert(a); //3. 1
+        var a = 3; //预解析时,变量名与函数名重名,预解析时的 var a = undefined 会被忽略,执行时的 a = 3 不受影响
+        alert(a); //4. 3
 
-			function a() {
-				alert(4);
-			}
-			alert(a);
+        function a() {
+            alert(4); //函数始终没有被调用,这里应该是一个幌子
+        }
+        alert(a); //5. 3
 
-			//09
-			f1();
-			console.log(c);
-			console.log(b);
-			console.log(a);
+        //09
+        f1();
+        console.log(c); //4. 9
+        console.log(b); //5. 9
+        console.log(a); //报错:a is not defined这道题原本全局的打印顺序是a,b,c,是本人改成的c,b,a
+        //由于JS报错,后面的代码都不执行,导致全局的c和b都没有打印,可实际上人家是存在的,如果真有这样的顺序,可以简单的做一个说明
 
-			function f1() {
-				var a = b = c = 9;
-				console.log(a)
-				console.log(b)
-				console.log(c)
-			}
+        function f1() {
+            var a = b = c = 9;
+            /* 
+            	这个变量的声明可谓暗藏玄机,其实可以把它分解成如下形式,那一下子就搞懂了
+            	var a = 9;
+            	b = 9;
+            	c = 9;
+            	此时,b和c都没有带var,所以按照上面说的,相当于是在全局创建了b和c,而a由于带var,只是在函数中声明的变量,不会影响全局
+            */
+            console.log(a); //1. 9
+            console.log(b); //2. 9
+            console.log(c); //3. 9
+        }
 
-			//10
-			myFun(10, 20);
-			var myFun = function(a, b) {
-				return a + b;
-			}
+        //10
+        myFun(10, 20); //报错:myFun is not a function, 本人在这道题上踩了两次坑,很无奈
+        var myFun = function(a, b) {
+                return a + b;
+            }
+            //这个函数定义的方式是:函数表达式定义,在预解析时这个函数不会整体提升,
+            //只是提升了 var myFun = undefined,此时当函数调用,肯定就会报错
 
 
-			//11
-			var i = 1;
-			i = i++;
-			var j = i++;
-			var k = i + ++i * i++; 
-			var k = i++ + i++ * i++; 
-			console.log(i, j, k);
-		</script>
-	</body>
+        //11
+        var i = 1;
+        i = i++; //本来 i 在运算之后应该变成 2 的,但无奈 = 左边是给 i 本身赋值,所以 i 还是 1
+        var j = i++; //++在后,先运算, j = 1, 后赋值, i = 2
+        var k = i + ++i * i++; //k = 2 + 3 * 3, i而后变成4
+        console.log(i, j, k); //4 1 11
+        var k = i++ + i++ * i++; //k = 4 + 5 * 6, i而后变成7
+        console.log(i, j, k); //7 1 34
+        //自增自减运算时,必须格外注意,只要上面有一个地方改变,那结果就完全不一样了
+    </script>
+</body>
 
 </html>

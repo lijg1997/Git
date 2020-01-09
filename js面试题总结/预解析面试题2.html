@@ -1,194 +1,246 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="UTF-8">
-		<title></title>
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
 
-	<body>
-		<script type="text/javascript">
-			//01
-			function test() {
-				b();
-				a = 1;
-				function b() {
-					var a;
-					console.log(1);
-					console.log(a); 
-					a = 2;
-				}
-			}
-			test();
-			console.log(a);
+<body>
+    <script type="text/javascript">
+        //01
+        function test() {
+            b();
+            a = 1;
 
-			//02
-			function fn(){
-				console.log(5);
-				console.log(fn);
-			}
-			console.log(fn());
-			var a = 12;
-			function fn(){
-				console.log(a);
-				return;
-				var a = 45;
-			}
-			fn();
+            function b() {
+                console.log(1); //1. 1
+                console.log(a); //2. undefined
+                var a = 2;
+            }
+        }
+        test();
+        console.log(a); //3. 1:函数查找时,只会向上找,直到找到全局,test函数中的a没有带var,相当于在全局创建了一个a
 
-			//03
-			var a = 100;
-			function text(){
-				var b = 2 * a;
-				var a = 200;
-				var c = a / 2;
-				console.log(b);
-				console.log(c);
-			}
-			text();
+        //02
+        function fn() {
+            console.log(5);
+            console.log(fn);
+        } //函数重名,此函数被覆盖,失效
+        console.log(fn()); //2. undefined:函数fn没指定返回值,默认为undefined
+        var a = 12;
 
-			//04
-			+function() {
-				console.log(a)
-				var a = 5;
-				function a() {}
-				console.log(a)
-				function b() {}
-				b = 6
-				console.log(b)
-				var c = d = b
-			}()
-			console.log(d)
-			console.log(c)
-			
-			//05
-			var a = 10;
-			function aaa(){ 
-			    alert(a);
-			};
-			aaa(); 
+        function fn() {
+            console.log(a); //1. undefined
+            return;
+            var a = 45; //return后面的代码不会执行,但是会预解析
+        }
+        fn(); //3. undefined
 
-			//06
-			function aaa(){
-				var a = 10;  
-			};
-			aaa();
-			alert(a);
-			
-			//07
-			var a = 10; 
-			function aaa(){ 
-			 	alert(a);
-			};            
-			function bbb(){
-				var a = 20;
-				aaa();
-			}
-			bbb(); 
-			
-			//08
-			function aaa(){
-			    a = 10; 
-			}
-			aaa();
-			alert(a);
-			var a;
-			function aaa(){
-			    a=10;
-			};
-			aaa();
-			alert(a);
-			
-			//09
-			function aaa(){
-			    var a=b=10; 
-			}
-			aaa();
-			alert(a);
-			alert(b);
-			 
-			 //10
-			function aaa(){
-			  	alert(a);
-			  	var a=20;
-			}
-			aaa(); 
-			var a=10;
-			function aaa(){
-			  	alert(a);
-			  	var a=20;
-			}
-			aaa();
-			var a=10;
-			function aaa(){
-			 	var a;
-			  	alert(a);
-			  	a=20;
-			}
-			aaa();
-			
-			//11
-			var a=10;
-			function aaa(a){ 
-			    alert(a);
-			    var a=20; 
-			} 
-			aaa(a);
-			    
-			//12   
-			var a=[1,2,3];
-			var b=a;
-			b.push(4); 
-			alert(a);
-			var a=[1,2,3];
-			var b=a;
-			b=[1,2,3,4]
-			alert(a)
+        //02_test
+        function fn() {
+            console.log(5);
+            console.log(fn);
+        } //函数重名,此函数被覆盖,失效
+        console.log(fn()); //2. undefined:函数fn没指定返回值,默认为undefined
+        var a = 12;
 
-			//13
-			var x = 10;
-			function fn() {
-			    console.log(x);
-			}
-			function show(f) {
-			    var x = 20;
-			    f();
-			}
-			show(fn);
-			
-			//14
-			var a;
-			function a() {}
-			console.log(typeof a)
-			
-			//15
-			if (!(b in window)) {
-			    	var b = 1;
-			}
-			console.log(b)
-			
-			//16
-			var c= 1  	
-			function c(c) {
-			    console.log(c)
-			    var c = 3
-			}
-			c(2) 
-			
-			//17	
-			var fn = function () {
-			    console.log(fn)
-			}
-			fn()
-			
-			//18	
-			var obj = {
-			    fn2: function () {
-			      	console.log(fn2)
-			    }
-			}
-			obj.fn2()
-		</script>
-	</body>
+        function fn() {
+            console.log(a); //1. undefined:找全局里的a,此时是undefined
+            return;
+            //return后面的代码不会执行,但是会预解析
+        }
+        fn(); //3. 12:此时调用fn,查找全局的a为12
+
+        //03
+        var a = 100;
+
+        function text() {
+            var b = 2 * a; //预解析变量提升,a为undefined,所以b为NaN
+            var a = 200;
+            var c = a / 2; //此时a为200
+            console.log(b); //NaN
+            console.log(c); //100
+        }
+        text();
+
+        //04
+        +
+
+        function() {
+            console.log(a); //1. 函数a本身
+            var a = 5; //预解析时函数与变量重名,被忽略
+            function a() {};
+            console.log(a); //2. 5
+            function b() {};
+            b = 6;
+            console.log(b); //3. 6
+            var c = d = b;
+            /* 
+            	遇到这种声明变量不要慌,将他们改成下面的形式,记住只有最右边的才是真正赋值的
+            	var c = b;所以c只是在函数内声明一个变量
+            	d = b;而d则是在全局添加一个变量,详细规则已解释过
+            */
+        }()
+        console.log(d); //4. 6
+        console.log(c); //报错:c is not define
+
+        //05
+        aaa(); //1. undefined
+        var a = 10;
+
+        function aaa() {
+            alert(a);
+        };
+        aaa(); //2. 10
+
+        //06
+        function aaa() {
+            var a = 10; //带var声明,不影响全局
+        };
+        aaa();
+        alert(a); //报错: a is not define
+
+        //07
+        var a = 10;
+
+        function aaa() {
+            alert(a); //10 查找的过程和在哪里调用无关,只会往上层去找,直到全局,如果全局没有,报错,
+            //这里很明显时10,与函数bbb里的a没有关系
+        }
+
+        function bbb() {
+            var a = 20; //如果bbb函数的a不带var的话就不一样了
+            aaa();
+        }
+        bbb();
+
+        //08
+        function aaa() {
+            var a = 10;
+        } //函数重名,覆盖
+        aaa();
+        alert(a); //10
+        var a;
+
+        function aaa() {
+            a = 10;
+        }
+        aaa();
+
+        alert(a); //10
+
+        //09
+        function aaa() {
+            var a = b = 10;
+            /* 
+            	改成如下形式
+            	var a = 10;
+            	b = 10
+            */
+        }
+        aaa();
+        alert(a); //报错: a is not define
+        alert(b); //注意,又是迷惑弹,虽然全局已经有了b这个变量,值为10,
+        //但是由于a已经报错,所以b并不会执行,如果遇到这种状况,可以稍微做一下解释
+
+        //10
+        function aaa() {
+            alert(a);
+            var a = 20;
+        } //重名覆盖无效
+        aaa(); //1. undefined
+        var a = 10;
+
+        function aaa() {
+            alert(a);
+            var a = 20;
+        } //重名覆盖无效
+        aaa(); //2. undefined
+        var a = 20;
+
+        function aaa() {
+            alert(a); //变量提升,打印的都是undefined,
+            //遇到这种题不要慌,其实都是多余的东西,函数里有带var的变量,所以不会再去全局找
+            //不管全局a发生多少次变化,都不会影响到这个函数里的a
+            var a = 20;
+        }
+        aaa(); //3. undefined
+
+        //11
+        var a = 10;
+
+        function aaa(a) {
+            alert(a); //1. 10使用全局传进来的参数
+            var a = 20;
+            alert(a); //2. 20
+        }
+        aaa(a);
+
+        //12   
+        var a = [1, 2, 3];
+        var b = a;
+        b.push(4); //对象数据类型都是传址,改的都是堆结构里的数据 
+        alert(a); //1. [1, 2, 3, 4]
+        var a = [1, 2, 3];
+        var b = a; //把a指向的地址赋值给b
+        b = [1, 2, 3, 4]; //注意,这时的b又重新指向了新的地址,与a的地址无关,不管怎么修改,都不会影响到a所指向的地址
+        alert(a); //2. [1, 2, 3]
+
+        //13
+        var x = 10;
+
+        function fn() {
+            console.log(x); //10 只会找到全局的x,和在哪调用无关
+        }
+
+        function show(f) {
+            var x = 20;
+            f();
+        }
+        show(fn);
+
+        //14
+        var a; //变量与函数重名被忽略
+
+        function a() {};
+        console.log(typeof a); //function
+
+        //15
+        if (!(b in window)) {
+            var b = 1; //这道题比较有意思,如果window上有b,那就进不了判断,要知道,if判断不会影响预解析
+            //所以在经过预解析之后,var b = undefined; window上已经有b了,并且值为undefined,
+            //所以真正执行的时候,已经进不去if判断了,所以b的值始终都为undefined
+        }
+        console.log(b); //undefined
+
+        //16掉坑无数次的题,注意!!!
+        var c = 1; //预解析,变量名与函数名重名,忽略,但 c = 1;还在
+
+        function c(c) {
+            console.log(c);
+            var c = 3;
+        } //预解析时,函数已被提升到最上面
+        c(2); //报错:c is not a function 
+        //真正执行的时候,这时的c已被改为 c = 1; 此时当函数调用会报错,
+        //遇到这种看似简单的题,一定要多注意,不然一不小心就掉进坑里了
+
+        //17	
+        var fn = function() {
+            console.log(fn); //函数体本身
+        }
+        fn();
+
+        //18	
+        var obj = {
+            fn2: function() {
+                console.log(fn2); //报错: fn2 is not defined,
+                //此时fn2是obj身上的一个方法,并不是真正的一个函数,如果直接调用的话,就会报错
+                //如果是这样打印,console.log(obj.fn2);就是fn2方法本身
+            }
+        }
+        obj.fn2();
+    </script>
+</body>
 
 </html>
