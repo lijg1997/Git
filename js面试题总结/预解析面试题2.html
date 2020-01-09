@@ -65,9 +65,7 @@
         text();
 
         //04
-        +
-
-        function() {
+        (function() {
             console.log(a); //1. 函数a本身
             var a = 5; //预解析时函数与变量重名,被忽略
             function a() {};
@@ -81,7 +79,7 @@
             	var c = b;所以c只是在函数内声明一个变量
             	d = b;而d则是在全局添加一个变量,详细规则已解释过
             */
-        }()
+        })()
         console.log(d); //4. 6
         console.log(c); //报错:c is not define
 

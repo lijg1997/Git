@@ -9,136 +9,136 @@
 <body>
     <script type="text/javascript">
         //代码片段一
-        // var name = "The Window";
-        // var object = {
-        //     name: "My Object",
-        //     getNameFunc: function() {
-        //         return this.name;
-        //         return function() {
-        //             return this.name;
-        //         };
-        //     }
-        // };
-        // console.log(object.getNameFunc()); //My Object
+        var name = "The Window";
+        var object = {
+            name: "My Object",
+            getNameFunc: function() {
+                return this.name;
+                return function() {
+                    return this.name;
+                };
+            }
+        };
+        console.log(object.getNameFunc()); //My Object
         //对象的方法的this指向的是对象
 
         //代码片段二
-        // var name2 = "The Window";
-        // var object2 = {
-        //     name2: "My Object",
-        //     getNameFunc: function() {
-        //         return function() {
-        //             return this.name2;
-        //         };
-        //     }
-        // };
-        // console.log(object2.getNameFunc()()); //The Window
-        //对象的方法里的函数,不管套了多少曾,都只是普通函数,都指向window
+        var name2 = "The Window";
+        var object2 = {
+            name2: "My Object",
+            getNameFunc: function() {
+                return function() {
+                    return this.name2;
+                };
+            }
+        };
+        console.log(object2.getNameFunc()()); //The Window
+        //对象的方法里的函数, 不管套了多少曾, 都只是普通函数, 都指向window
 
         //代码片段三
-        // function fun(n, o) {
-        //     console.log(o)
-        //     return {
-        //         fun: function(m) {
-        //             return fun(m, n)
-        //         }
-        //     }
-        // }
+        function fun(n, o) {
+            console.log(o)
+            return {
+                fun: function(m) {
+                    return fun(m, n)
+                }
+            }
+        }
 
-        // var a = fun(0);//undefined
-        // a.fun(1);//0
-        // a.fun(2);//0
-        // a.fun(3);//0
+        var a = fun(0); //undefined
+        a.fun(1); //0
+        a.fun(2); //0
+        a.fun(3); //0
 
-        // var b = fun(0).fun(1).fun(2).fun(3);//undefined 0 1 2
+        var b = fun(0).fun(1).fun(2).fun(3); //undefined 0 1 2
 
-        // var c = fun(0).fun(1);//undefined 0
-        // c.fun(2);//1
-        // c.fun(3);//1
+        var c = fun(0).fun(1); //undefined 0
+        c.fun(2); //1
+        c.fun(3); //1
 
         //代码片段四
-        // function Foo() {
-        //     getName = function() {
-        //         alert(1);
-        //     }
-        //     return this;
-        // }
-        // Foo.getName = function() {
-        //     alert(2);
-        // }
-        // Foo.prototype.getName = function() {
-        //     alert(3);
-        // }
-        // var getName = function() {
-        //     alert(4);
-        // }
+        function Foo() {
+            getName = function() {
+                alert(1);
+            }
+            return this;
+        }
+        Foo.getName = function() {
+            alert(2);
+        }
+        Foo.prototype.getName = function() {
+            alert(3);
+        }
+        var getName = function() {
+            alert(4);
+        }
 
-        // function getName() {
-        //     alert(5);
-        // }
-        // //请写出以下输出结果：
-        // Foo.getName(); //
-        // getName(); //
-        // Foo().getName(); //
-        // getName(); //
-        // new Foo.getName(); //
-        // new Foo().getName(); //
-        // new new Foo().getName(); //
+        function getName() {
+            alert(5);
+        }
+        //请写出以下输出结果：
+        Foo.getName(); //
+        getName(); //
+        Foo().getName(); //
+        getName(); //
+        new Foo.getName(); //
+        new Foo().getName(); //
+        new new Foo().getName(); //
 
         //代码片段五
-        // var Counter = (function() {
-        //     var privateCounter = 0;
+        var Counter = (function() {
+            var privateCounter = 0;
 
-        //     function changeBy(val) {
-        //         privateCounter += val;
-        //     }
-        //     return {
-        //         increment: function() {
-        //             changeBy(1);
-        //         },
-        //         decrement: function() {
-        //             changeBy(-1);
-        //         },
-        //         value: function() {
-        //             return privateCounter;
-        //         }
-        //     }
-        // })();
-        // console.log(Counter.value()); //0
-        // Counter.increment(); //1
-        // Counter.increment(); //2
-        // console.log(Counter.value()); //2
-        // Counter.decrement(); //1
-        // console.log(Counter.value()); //1
+            function changeBy(val) {
+                privateCounter += val;
+            }
+            return {
+                increment: function() {
+                    changeBy(1);
+                },
+                decrement: function() {
+                    changeBy(-1);
+                },
+                value: function() {
+                    return privateCounter;
+                }
+            }
+        })();
+        console.log(Counter.value()); //0
+        Counter.increment(); //1
+        Counter.increment(); //2
+        console.log(Counter.value()); //2
+        Counter.decrement(); //1
+        console.log(Counter.value()); //1
 
         //代码片段六
-        // var makeCounter = function() {
-        //     var privateCounter = 0;
+        var makeCounter = function() {
+            var privateCounter = 0;
 
-        //     function changeBy(val) {
-        //         privateCounter += val;
-        //     }
-        //     return {
-        //         increment: function() {
-        //             changeBy(1);
-        //         },
-        //         decrement: function() {
-        //             changeBy(-1);
-        //         },
-        //         value: function() {
-        //             return privateCounter;
-        //         }
-        //     }
-        // };
-        // var Counter1 = makeCounter(); //
-        // var Counter2 = makeCounter(); //
-        // console.log(Counter1.value()); //0
-        // Counter1.increment(); //1
-        // Counter1.increment(); //2
-        // console.log(Counter1.value()); //2
-        // Counter1.decrement(); //1
-        // console.log(Counter1.value()); //1
-        // console.log(Counter2.value()); //0
+            function changeBy(val) {
+                privateCounter += val;
+            }
+            return {
+                increment: function() {
+                    changeBy(1);
+                },
+                decrement: function() {
+                    changeBy(-1);
+                },
+                value: function() {
+                    return privateCounter;
+                }
+            }
+        };
+        var Counter1 = makeCounter(); //
+        var Counter2 = makeCounter(); //
+        console.log(Counter1.value()); //0
+        Counter1.increment(); //1
+        Counter1.increment(); //2
+        console.log(Counter1.value()); //2
+        Counter1.decrement(); //1
+        console.log(Counter1.value()); //1
+        console.log(Counter2.value()); //0
     </script>
 </body>
 

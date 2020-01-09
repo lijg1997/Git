@@ -43,7 +43,12 @@
                 })
             });
         }
-        executor(resolve, reject)
+        //保险起见，使用try catch调用
+        try {
+            executor(resolve, reject)
+        } catch (error) {
+            reject(error)
+        }
     }
 
     /* 一、then做什么？
